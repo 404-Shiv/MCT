@@ -20,12 +20,17 @@
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg-color);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(142, 45, 226, 0.15), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(17, 153, 142, 0.15), transparent 25%);
   color: var(--text-dark);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .container {
@@ -36,11 +41,37 @@ body {
 }
 
 .main-title {
-  font-size: 2rem;
-  font-weight: 300;
+  font-size: 2.5rem;
+  font-weight: 700;
   margin-bottom: 40px;
-  color: #555;
+  background: linear-gradient(90deg, #b273ff, #47ffd3, #b273ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
   letter-spacing: 2px;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .cards-wrapper {
@@ -61,6 +92,21 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-20px) scale(1.02);
+  z-index: 5;
+}
+
+.card-purple:hover {
+  box-shadow: 0 40px 80px rgba(142, 45, 226, 0.35);
+}
+
+.card-emerald:hover {
+  box-shadow: 0 40px 80px rgba(17, 153, 142, 0.35);
 }
 
 .card-half {
@@ -73,14 +119,16 @@ body {
 .card-top {
   color: var(--text-light);
   justify-content: flex-start;
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
 }
 
 .card-purple .card-top {
-  background: var(--purple-gradient);
+  background-image: var(--purple-gradient);
 }
 
 .card-emerald .card-top {
-  background: var(--emerald-gradient);
+  background-image: var(--emerald-gradient);
 }
 
 .card-bottom {
@@ -101,15 +149,30 @@ body {
 .menu-icon {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+  padding: 5px;
 }
 
 .menu-icon span {
-  width: 16px;
+  width: 18px;
   height: 2px;
   background: #fff;
   border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.menu-icon:hover span:nth-child(1) {
+  transform: translateY(2px);
+}
+
+.menu-icon:hover span:nth-child(3) {
+  transform: translateY(-2px);
+}
+
+.menu-icon:hover {
+  opacity: 1;
 }
 
 h2 {
@@ -155,6 +218,7 @@ textarea {
   height: 80px;
   padding: 0;
   line-height: 1.2;
+  transition: border-color 0.3s ease;
 }
 
 textarea:focus {
@@ -163,15 +227,35 @@ textarea:focus {
 
 textarea::placeholder {
   color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s ease;
+}
+
+textarea:focus::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .card-top textarea {
-  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-top textarea:focus {
+  border-bottom-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 10px 20px -10px rgba(255, 255, 255, 0.4);
 }
 
 .card-bottom textarea {
   color: inherit;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.card-purple .card-bottom textarea:focus {
+  border-bottom-color: var(--purple-text);
+  box-shadow: 0 10px 20px -10px rgba(142, 45, 226, 0.3);
+}
+
+.card-emerald .card-bottom textarea:focus {
+  border-bottom-color: var(--emerald-text);
+  box-shadow: 0 10px 20px -10px rgba(17, 153, 142, 0.3);
 }
 
 .card-purple .card-bottom textarea {
@@ -190,23 +274,60 @@ textarea::placeholder {
   color: rgba(25, 173, 134, 0.3);
 }
 
+.unit-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.copy-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.copy-btn:hover {
+  color: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.copy-btn.copied {
+  color: #19AD86;
+  background: rgba(25, 173, 134, 0.1);
+}
+
 .unit,
 .unit-dark {
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   line-height: 1.2;
   letter-spacing: 1px;
   padding-bottom: 15px;
   cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.unit:hover,
+.unit-dark:hover {
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 .unit {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .unit-dark {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 /* Swap Button */
@@ -215,26 +336,35 @@ textarea::placeholder {
   top: 50%;
   left: 80%;
   transform: translate(-50%, -50%);
-  width: 45px;
-  height: 45px;
+  width: 55px;
+  height: 55px;
   background: #fff;
   border: none;
-  border-radius: 5px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
-  transition: transform 0.2s;
-  color: #777;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: #555;
 }
 
-.swap-btn:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-  color: var(--purple-text);
+.swap-btn svg {
+  transition: all 0.4s ease;
+}
+
+.card-purple .swap-btn:hover {
+  transform: translate(-50%, -50%) rotate(180deg) scale(1.25);
+  color: #fff;
+  background: var(--purple-text);
+  box-shadow: 0 0 30px rgba(142, 45, 226, 0.7);
 }
 
 .card-emerald .swap-btn:hover {
-  color: var(--emerald-text);
+  transform: translate(-50%, -50%) rotate(180deg) scale(1.25);
+  color: #fff;
+  background: var(--emerald-text);
+  box-shadow: 0 0 30px rgba(17, 153, 142, 0.7);
 }

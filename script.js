@@ -60,3 +60,24 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('dateText').textContent = today;
   document.getElementById('dateMorse').textContent = today;
 });
+
+// Copy to Clipboard logic
+function copyToClipboard(elementId, btnElement) {
+  const copyText = document.getElementById(elementId);
+  if (!copyText.value) return;
+
+  // Modern clipboard API
+  navigator.clipboard.writeText(copyText.value).then(() => {
+    // Visual feedback success state
+    btnElement.classList.add('copied');
+    // Change SVG to Checkmark
+    const originalSVG = btnElement.innerHTML;
+    btnElement.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+    // Revert back after 2 seconds
+    setTimeout(() => {
+      btnElement.classList.remove('copied');
+      btnElement.innerHTML = originalSVG;
+    }, 2000);
+  });
+}
