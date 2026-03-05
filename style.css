@@ -1,0 +1,240 @@
+:root {
+  --bg-color: #eef2f5;
+  --text-dark: #333;
+  --text-light: #fff;
+  --card-width: 320px;
+  --card-height: 500px;
+  --purple-gradient: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+  --emerald-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  --purple-text: #6917E1;
+  --emerald-text: #19AD86;
+  --shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+  color: #555;
+  letter-spacing: 2px;
+}
+
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-half {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-top {
+  color: var(--text-light);
+  justify-content: flex-start;
+}
+
+.card-purple .card-top {
+  background: var(--purple-gradient);
+}
+
+.card-emerald .card-top {
+  background: var(--emerald-gradient);
+}
+
+.card-bottom {
+  background: #fff;
+  justify-content: flex-end;
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+.menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.menu-icon span {
+  width: 16px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+h2 span {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* Inputs / Outputs */
+.input-group,
+.output-group {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.output-group {
+  margin-bottom: 10px;
+}
+
+textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: inherit;
+  resize: none;
+  height: 80px;
+  padding: 0;
+  line-height: 1.2;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.card-top textarea {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.card-bottom textarea {
+  color: inherit;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.card-purple .card-bottom textarea {
+  color: var(--purple-text);
+}
+
+.card-purple .card-bottom textarea::placeholder {
+  color: rgba(105, 23, 225, 0.3);
+}
+
+.card-emerald .card-bottom textarea {
+  color: var(--emerald-text);
+}
+
+.card-emerald .card-bottom textarea::placeholder {
+  color: rgba(25, 173, 134, 0.3);
+}
+
+.unit,
+.unit-dark {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  padding-bottom: 15px;
+  cursor: pointer;
+}
+
+.unit {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.unit-dark {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Swap Button */
+.swap-btn {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  width: 45px;
+  height: 45px;
+  background: #fff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: transform 0.2s;
+  color: #777;
+}
+
+.swap-btn:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  color: var(--purple-text);
+}
+
+.card-emerald .swap-btn:hover {
+  color: var(--emerald-text);
+}
