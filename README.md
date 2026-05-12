@@ -3,7 +3,7 @@
 A simple **Morse Code Translator** built using **HTML, CSS, and JavaScript**.  
 This project converts **English text into Morse code and Morse code into English** instantly in the browser.
 
-35e46g
+35e46
 
 ## Features
 
