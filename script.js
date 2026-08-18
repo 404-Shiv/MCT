@@ -6,7 +6,10 @@ const morseMap = {
   'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--',
   'Z': '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--',
   '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..',
-  '9': '----.', ' ': '/'
+  '9': '----.', '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.',
+  '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...',
+  ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-',
+  '_': '..--.-', '"': '.-..-.', '$': '...-..-', '@': '.--.-.', ' ': '/'
 };
 
 const reverseMap = {};
@@ -16,14 +19,16 @@ for (let key in morseMap) {
 
 function translateToMorse() {
   const input = document.getElementById("inputText").value.toUpperCase();
-  let morse = "";
-
-  for (let char of input) {
-    morse += morseMap[char] ? morseMap[char] + " " : "? ";
+  if (!input.trim()) {
+    document.getElementById("outputMorse").value = "";
+    return;
   }
 
-  const reversed = morse.trim().split("").reverse().join("");
-  document.getElementById("outputMorse").value = reversed;
+  const morseWords = input.split(/\s+/).map(word => {
+    return word.split('').map(char => morseMap[char] || '?').join(' ');
+  });
+
+  document.getElementById("outputMorse").value = morseWords.join(" / ");
 }
 
 function translateToEnglish() {
@@ -32,21 +37,17 @@ function translateToEnglish() {
     document.getElementById("outputText").value = "";
     return;
   }
-  const unreversed = input.split("").reverse().join("");
-  const morseWords = unreversed.split(" / ");
-  let english = "";
 
-  for (let word of morseWords) {
-    const chars = word.trim().split(" ");
-    for (let morseChar of chars) {
-      if (morseChar) {
-        english += reverseMap[morseChar] || "?";
-      }
-    }
-    english += " ";
-  }
+  const morseWords = input.split(/\s*\/\s*|\s{3,}/);
+  const englishWords = morseWords.map(word => {
+    const chars = word.trim().split(/\s+/);
+    return chars.map(morseChar => {
+      if (!morseChar) return '';
+      return reverseMap[morseChar] || '?';
+    }).join('');
+  });
 
-  document.getElementById("outputText").value = english.trim();
+  document.getElementById("outputText").value = englishWords.join(" ");
 }
 
 // Add real-time translation bindings
@@ -57,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set dates just like the reference photo top left
   const options = { year: 'numeric', month: 'short', day: 'numeric' };
   const today = new Date().toLocaleDateString('en-US', options);
-  document.getElementById('dateText').textContent = today;
-  document.getElementById('dateMorse').textContent = today;
+  if (document.getElementById('dateText')) document.getElementById('dateText').textContent = today;
+  if (document.getElementById('dateMorse')) document.getElementById('dateMorse').textContent = today;
 });
 
 // Copy to Clipboard logic
@@ -81,3 +82,4 @@ function copyToClipboard(elementId, btnElement) {
     }, 2000);
   });
 }
+
